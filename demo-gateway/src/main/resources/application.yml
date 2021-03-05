@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
+      
+spring:
+  application:
+    name: demo-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: train-ticket-booking-service
+        uri: lb://train-ticket-booking-service
+        predicates:
+        - Path=/api/train-ticket-booking/**
+      - id: train-ticket-booking-service1
+        uri: lb://train-ticket-booking-service
+        predicates:
+        - Path=/token/**
+      - id: user-service
+        uri: lb://user-service
+        predicates:
+        - Path=/api/user/**
